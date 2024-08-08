@@ -174,6 +174,10 @@ public class StreamExercise {
         Optional<String> optional = null;
 
         //TODO:Write code here
+        optional = people.stream().filter(person -> person.getPersonId() == personId)
+                .map(person -> person.getDateOfBirth().getDayOfWeek() + " " + person.getDateOfBirth().getDayOfMonth() +
+                        " " + person.getDateOfBirth().getMonth() + " " + person.getDateOfBirth().getYear())
+                .findFirst();
 
         assertNotNull(optional);
         assertTrue(optional.isPresent());
@@ -193,6 +197,7 @@ public class StreamExercise {
 
         //TODO:Write code here
 
+        averageAge = people.stream().mapToInt(personToAge).average().orElse(0);
         assertTrue(averageAge > 0);
         assertEquals(expected, averageAge, .01);
     }
@@ -207,6 +212,9 @@ public class StreamExercise {
         String[] result = null;
 
         //TODO:Write code here
+        result = people.stream().map(Person::getFirstName)
+                .filter(name -> name.equalsIgnoreCase(new StringBuilder(name).reverse().toString()))
+                .sorted().distinct().toArray(String[]::new);
 
         assertNotNull(result);
         assertArrayEquals(expected, result);
