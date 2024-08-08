@@ -10,6 +10,7 @@ import java.time.Period;
 import java.util.*;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -229,6 +230,7 @@ public class StreamExercise {
         Map<String, List<Person>> personMap = null;
 
         //TODO:Write code here
+        personMap = people.stream().collect(Collectors.groupingBy(Person::getLastName));
 
         assertNotNull(personMap);
         assertEquals(expectedSize, personMap.size());
@@ -242,7 +244,8 @@ public class StreamExercise {
         LocalDate[] _2020_dates = null;
 
         //TODO: Optional Task -> Write code here
-
+        _2020_dates = Stream.iterate(LocalDate.parse("2020-01-01"), date -> date.plusDays(1))
+                .limit(366).toArray(LocalDate[]::new);
 
         assertNotNull(_2020_dates);
         assertEquals(366, _2020_dates.length);
