@@ -116,6 +116,7 @@ public class StreamExercise {
         Optional<Person> optional = null;
 
         //TODO:Write code here
+        optional = people.stream().filter(person -> person.getPersonId() == 5436).findFirst();
 
         assertNotNull(optional);
         assertTrue(optional.isPresent());
@@ -132,6 +133,9 @@ public class StreamExercise {
         Optional<Person> optional = null;
 
         //TODO:Write code here
+        Comparator<Person> comparator = Comparator.comparing(Person::getDateOfBirth);
+
+        optional = people.stream().min(comparator);
 
         assertNotNull(optional);
         assertEquals(expectedBirthDate, optional.get().getDateOfBirth());
@@ -148,6 +152,11 @@ public class StreamExercise {
         List<PersonDto> dtoList = null;
 
         //TODO:Write code here
+        // Get first names and last names of people born before 1920-01-01.
+        dtoList = people.stream().filter(person -> person.getDateOfBirth().isBefore(date))
+                .map(person -> new PersonDto(person.getPersonId(), person.getFirstName() + " " + person.getLastName()))
+                .collect(Collectors.toList());
+
 
         assertNotNull(dtoList);
         assertEquals(expectedSize, dtoList.size());
